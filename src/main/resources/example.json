@@ -56,7 +56,8 @@
         "age"
       ],
       "from": "tout",
-      "to": "outTable"
+      "to": "outTable",
+      "distinct": false
     },
     {
       "condition": "age===\"18\"",
