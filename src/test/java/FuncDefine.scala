@@ -1,5 +1,3 @@
-package dsl
-
 import scala.collection.mutable
 
 object FuncDefine {
