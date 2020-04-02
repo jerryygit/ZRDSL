@@ -49,7 +49,8 @@ select:
   '{'
      cols ','
      '"from"' ':' STRING ','
-     '"to"' ':' STRING
+     '"to"' ':' STRING ','
+     '"distinct"' ':' ('true' | 'false')
   '}'
   ;
 

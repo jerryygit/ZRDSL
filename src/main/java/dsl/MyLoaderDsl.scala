@@ -87,8 +87,10 @@ class MyLoaderDsl extends MingBdJSONBaseListener {
     val cols = JSONTool.parseArray(obj.getString("cols")).toJavaList(classOf[String])
     val from = obj.getString("from")
     val to = obj.getString("to")
+    val distinct = obj.getBoolean("distinct")
     val table1 = map.get(from)
-    val table2 = table1.select(String.join(",", cols))
+    var table2 = table1.select(String.join(",", cols))
+    if(distinct) table2 = table2.distinct()
     map.put(to, table2)
   }
 
