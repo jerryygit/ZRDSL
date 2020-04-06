@@ -1,8 +1,12 @@
+import javassist.{ClassPool, CtClass, CtMethod, CtNewMethod}
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.table.api.scala.StreamTableEnvironment
 import org.apache.flink.table.api.{DataTypes, EnvironmentSettings}
 import org.apache.flink.table.descriptors.{Json, Kafka, Schema}
-import org.apache.flink.table.functions._
+import org.apache.flink.types.Row
+import org.apache.flink.api.scala._
+import org.apache.flink.table.api.scala._
+import org.apache.flink.table.functions.ScalarFunction
 
 object TestTabke {
 
@@ -51,22 +55,20 @@ object TestTabke {
     val m1 = bsTableEnv.from("t1").as("id1,name")
     val m2 = bsTableEnv.from("t2").as("id2,age")
     val mf = m1.join(m2).where("id1 = id2")
-    //    val code = FuncDefine.getFuns().getOrElse("tailMap", null)
-    //    val cim = ClassCreateUtils(code)
-    //    val ins = cim.instance
-    //    val tail = new TailMap("_tail")
-    //    println(ins.getClass)
-    //    println(tail.getClass)
-    //    bsTableEnv.registerFunction("tailmap", ins)
-    //    mf.select('name, ins('name))
+    val pool = ClassPool.getDefault
+    val cc = pool.makeClass("TailMapFun", pool.get("org.apache.flink.table.functions.ScalarFunction"))
+    val m = CtNewMethod.make(
+      """
+        |public String eval(String name){return $1+"_tail";}
+        |""".stripMargin, cc)
+    cc.addMethod(m)
+    val func = cc.toClass.newInstance.asInstanceOf[ScalarFunction]
+    bsTableEnv.registerFunction("tailmap", func)
+    mf.select('name,func('name)).toAppendStream[Row].print()
     bsEnv.execute()
 
   }
 
-  class TailMap(tail: String) extends ScalarFunction {
-    def eval(a: String) = {
-      a + tail
-    }
-  }
+
 
 }

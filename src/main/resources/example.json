@@ -52,7 +52,8 @@
     {
       "cols": [
         "id1",
-        "name",
+        "tailMap(name)",
+        "headMap(name)",
         "age"
       ],
       "from": "tout",
@@ -73,7 +74,8 @@
       "from": "outTableF",
       "cols": [
         "id1",
-        "name",
+        "_c1",
+        "_c2",
         "age"
       ]
     }

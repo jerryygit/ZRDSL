@@ -1,0 +1,17 @@
+start tailMap
+className = TailMapFun
+code = """
+  public String eval(String name){
+     return name+"_tail";
+  }
+"""
+type = udf
+
+start headMap
+className = HeadMapFun
+code = """
+  public String eval(String name){
+     return "head_"+name;
+  }
+"""
+type = udf

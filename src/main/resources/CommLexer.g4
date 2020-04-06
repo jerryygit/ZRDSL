@@ -1,39 +1,11 @@
-grammar JSON;
-
-json
-   : value
-   ;
-
-obj
-   : '{' pair (',' pair)* '}'
-   | '{' '}'
-   ;
-
-pair
-   : STRING ':' value
-   ;
-
-arr
-   : '[' value (',' value)* ']'
-   | '[' ']'
-   ;
-
-value
-   : STRING
-   | NUMBER
-   | obj
-   | arr
-   | 'true'
-   | 'false'
-   | 'null'
-   ;
-
+lexer grammar CommLexer;
 
 STRING
    : '"' (ESC | SAFECODEPOINT)* '"'
    ;
-
-
+BLOCK_STRING
+    : '\'\'\'' ~[+] .*? '\'\'\''
+    ;
 fragment ESC
    : '\\' (["\\/bfnrt] | UNICODE)
    ;
@@ -47,24 +19,20 @@ fragment SAFECODEPOINT
    : ~ ["\\\u0000-\u001F]
    ;
 
-
 NUMBER
    : '-'? INT ('.' [0-9] +)? EXP?
    ;
-
 
 fragment INT
    : '0' | [1-9] [0-9]*
    ;
 
 // no leading zeros
-
 fragment EXP
    : [Ee] [+\-]? INT
    ;
 
 // \- since - means "range" inside [...]
-
 WS
    : [ \t\n\r] + -> skip
    ;

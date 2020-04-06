@@ -9,7 +9,7 @@ import org.apache.flink.table.api.{DataTypes, EnvironmentSettings, Table}
 import org.apache.flink.table.descriptors.{Json, Kafka, Schema}
 import org.apache.flink.types._
 import parse.{MingBdJSONBaseListener, MingBdJSONParser}
-import tools.JSONTool
+import tools.{FuncRW, JSONTool}
 
 import scala.collection.JavaConverters._
 
@@ -33,6 +33,7 @@ class MyLoaderDsl extends MingBdJSONBaseListener {
   }
 
   override def enterRuntype(ctx: MingBdJSONParser.RuntypeContext): Unit = {
+    FuncRW.register(bsTableEnv)
     val mode: String = ctx.getChild(2).getText.replaceAll("\"", "")
     mode match {
       case "stream" =>
@@ -83,6 +84,7 @@ class MyLoaderDsl extends MingBdJSONBaseListener {
   }
 
   override def enterSelect(ctx: MingBdJSONParser.SelectContext): Unit = {
+    println(ctx.getText)
     val obj = JSONTool.parseObj(ctx.getText)
     val cols = JSONTool.parseArray(obj.getString("cols")).toJavaList(classOf[String])
     val from = obj.getString("from")
