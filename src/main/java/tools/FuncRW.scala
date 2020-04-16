@@ -32,10 +32,6 @@ object FuncRW {
   map.+=(("tailMap", f1))
   map.+=(("headMap", f2))
 
-  def getFunByName(name: String) = {
-    map.get(name).getOrElse(null)
-  }
-
   def register(bsTableEnv: StreamTableEnvironment) = {
     map.foreach(item => {
       val name = item._1
