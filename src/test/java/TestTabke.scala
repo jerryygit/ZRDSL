@@ -1,12 +1,11 @@
-import javassist.{ClassPool, CtClass, CtMethod, CtNewMethod}
+import javassist.{ClassPool, CtNewMethod}
+import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.table.api.scala.StreamTableEnvironment
+import org.apache.flink.table.api.scala.{StreamTableEnvironment, _}
 import org.apache.flink.table.api.{DataTypes, EnvironmentSettings}
 import org.apache.flink.table.descriptors.{Json, Kafka, Schema}
-import org.apache.flink.types.Row
-import org.apache.flink.api.scala._
-import org.apache.flink.table.api.scala._
 import org.apache.flink.table.functions.ScalarFunction
+import org.apache.flink.types.Row
 
 object TestTabke {
 
@@ -14,11 +13,15 @@ object TestTabke {
     val bsEnv = StreamExecutionEnvironment.getExecutionEnvironment
     val bsSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build()
     val bsTableEnv = StreamTableEnvironment.create(bsEnv, bsSettings)
+    //设置checkpoint
+    //    bsEnv.enableCheckpointing(5 * 1000, CheckpointingMode.EXACTLY_ONCE)
+    //    bsEnv.setStateBackend(new RocksDBStateBackend("file:///D:\\checkpoint"))
+
     bsTableEnv.connect(
       new Kafka()
         .version("0.10")
         .topic("t1")
-        .startFromEarliest()
+//        .startFromEarliest()
         .property("zookeeper.connect", "localhost:2181")
         .property("bootstrap.servers", "localhost:9092")
     )
@@ -64,11 +67,8 @@ object TestTabke {
     cc.addMethod(m)
     val func = cc.toClass.newInstance.asInstanceOf[ScalarFunction]
     bsTableEnv.registerFunction("tailmap", func)
-    mf.select('name,func('name)).toAppendStream[Row].print()
+    mf.select('name, func('name)).toAppendStream[Row].print()
     bsEnv.execute()
 
   }
-
-
-
 }
