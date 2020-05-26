@@ -1,4 +1,4 @@
-// Generated from D:/MyWorkSpace/zrDSL-flink/src/main/resources\MingBdJSON.g4 by ANTLR 4.8
+// Generated from D:/MyWorkSpace/zrDSL-flink/json-dsl/src/main/resources\MingBdJSON.g4 by ANTLR 4.8
 package parse;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

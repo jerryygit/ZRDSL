@@ -11,5 +11,11 @@
 
     <artifactId>json-flink-1.10</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.jerry</groupId>
+            <artifactId>json-dsl</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>

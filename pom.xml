@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>json-flink-1.10</module>
         <module>json-dsl</module>
+        <module>json-flink-1.10</module>
         <module>sql-dsl</module>
         <module>study</module>
     </modules>

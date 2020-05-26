@@ -1,0 +1,15 @@
+t1 :
+{"id":1,"name":"jerry"}
+{"id":2,"name":"tom"}
+{"id":3,"name":"jack"}
+{"id":4,"name":"fk"}
+{"id":5,"name":"fk1"}
+{"id":6,"name":"fk2"}
+
+t2:
+{"id":1,"age":18}
+{"id":2,"age":28}
+{"id":3,"age":18}
+{"id":4,"age":18}
+{"id":5,"age":18}
+{"id":6,"age":18}
