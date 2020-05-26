@@ -1,3 +1,6 @@
 /.idea/
 /target/
 /mingBd-dsl.iml
+/json-dsl/json-dsl.iml
+/json-flink-1.10/json-flink-1.10.iml
+/sql-dsl/sql-dsl.iml

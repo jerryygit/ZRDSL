@@ -1,0 +1,83 @@
+{
+  "runMode": "stream",
+  "load": [
+    {
+      "zk": "127.0.0.1:2181",
+      "btServers": "127.0.0.1:9092",
+      "topic": "t1",
+      "groupId": "test1",
+      "schema": [
+        {
+          "nameI": "id",
+          "aliasI": "id1"
+        },
+        {
+          "nameI": "name",
+          "aliasI": "name"
+        }
+      ],
+      "tableName": "t1"
+    },
+    {
+      "zk": "127.0.0.1:2181",
+      "btServers": "127.0.0.1:9092",
+      "topic": "t2",
+      "groupId": "test2",
+      "schema": [
+        {
+          "nameI": "id",
+          "aliasI": "id2"
+        },
+        {
+          "nameI": "age",
+          "aliasI": "age"
+        }
+      ],
+      "tableName": "t2"
+    }
+  ],
+  "join": [
+    {
+      "inputT": [
+        "t1",
+        "t2"
+      ],
+      "conditionT": [
+        "id1=id2"
+      ],
+      "outputT": "tout"
+    }
+  ],
+  "transform": [
+    {
+      "cols": [
+        "id1",
+        "tailMap(name)",
+        "tailMap(name)",
+        "age"
+      ],
+      "from": "tout",
+      "to": "outTable",
+      "distinct": false
+    },
+    {
+      "condition": "age===18",
+      "from": "outTable",
+      "to": "outTableF"
+    }
+  ],
+  "save": [
+    {
+      "zk": "127.0.0.1:2181",
+      "btServers": "127.0.0.1:9092",
+      "topic": "t4",
+      "from": "outTableF",
+      "cols": [
+        "id1",
+        "_c1",
+        "_c2",
+        "age"
+      ]
+    }
+  ]
+}
