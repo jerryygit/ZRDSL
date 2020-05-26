@@ -12,8 +12,8 @@ import parse.{MingBdJSONLexer, MingBdJSONParser}
  * Description: 项目入口
  */
 object AppMain extends App {
-  val fileName = new File("json-dsl/src/main/resources/exampleBatch.json")
-  //  val fileName = new File("src\\main\\resources\\example.json")
+  //  val fileName = new File("json-dsl/src/main/resources/exampleBatch.json")
+  val fileName = new File("json-dsl\\src\\main\\resources\\example.json")
   val in = new FileInputStream(fileName)
   val input = new ANTLRInputStream(in)
   val lexer = new MingBdJSONLexer(input)

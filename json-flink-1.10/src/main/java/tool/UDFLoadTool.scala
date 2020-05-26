@@ -3,6 +3,10 @@ package tool
 import java.io.File
 import java.net.URLDecoder
 
+import anno.UDFRegisterAnno
+import entity.UDFDefine
+import org.apache.flink.table.functions.ScalarFunction
+
 import scala.collection.mutable
 
 object UDFLoadTool {
