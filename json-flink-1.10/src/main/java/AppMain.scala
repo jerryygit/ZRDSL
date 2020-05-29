@@ -13,7 +13,7 @@ import parse.{MingBdJSONLexer, MingBdJSONParser}
  */
 object AppMain extends App {
   //  val fileName = new File("json-dsl/src/main/resources/exampleBatch.json")
-  val fileName = new File("json-dsl\\src\\main\\resources\\example.json")
+  val fileName = new File("json-flink-1.10\\src\\main\\resources\\exampleBatch.json")
   val in = new FileInputStream(fileName)
   val input = new ANTLRInputStream(in)
   val lexer = new MingBdJSONLexer(input)
